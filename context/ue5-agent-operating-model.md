@@ -30,3 +30,21 @@ patch workflow.
 - Shader worker version mismatches require rebuilding `ShaderCompileWorker`.
 - Blueprint CDOs can be correct while placed level instances retain stale
   overrides.
+
+## Source-Derived Findings To Preserve
+
+- UGS-style workspace discovery may depend on engine source code paths such as
+  `OpenProjectInfo.cs` and `Engine/Build/Build.version`. Before changing the
+  engine/project directory shape, verify how the local UE tooling discovers the
+  engine.
+- UE MCP/editor automation can be router based rather than a flat tool list.
+  Discover concrete toolsets first, then call tools through the active router
+  envelope.
+- Shader worker output-version errors usually point at a stale
+  `ShaderCompileWorker` binary/version file. Rebuild the worker before treating
+  the problem as generic cache corruption.
+- Missing UE support binaries may be GitDeps-managed. Check
+  `Engine/Build/Commit.gitdeps.xml` before manually sourcing binaries.
+- Zen/shared DDC behavior is controlled by engine config and runtime logs.
+  Distinguish healthy local Zen startup from optional shared-cache
+  infrastructure.
