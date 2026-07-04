@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 Perforce"
+  short_description: "UE5 Perforce changelist hygiene"
+  default_prompt: "Use $ue5-perforce to safely prepare and verify this Unreal Perforce change."

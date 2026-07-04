@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 Editor Automation"
+  short_description: "UE5 editor MCP and automation routing"
+  default_prompt: "Use $ue5-editor-automation to get the Unreal Editor into a known automation state."

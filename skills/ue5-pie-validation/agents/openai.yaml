@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 PIE Validation"
+  short_description: "Live UE5 PIE behavior checks"
+  default_prompt: "Use $ue5-pie-validation to verify this Unreal change in PIE."

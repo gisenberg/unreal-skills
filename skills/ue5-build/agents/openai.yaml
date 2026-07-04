@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 Build"
+  short_description: "UE5 build and packaging workflows"
+  default_prompt: "Use $ue5-build to choose and run the right UE5 build validation."

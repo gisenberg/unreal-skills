@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 AngelScript"
+  short_description: "UE5 AngelScript gameplay guidance"
+  default_prompt: "Use $ue5-angelscript to adapt this Unreal gameplay change to AngelScript."
