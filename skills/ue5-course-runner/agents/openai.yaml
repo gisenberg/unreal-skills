@@ -1,4 +1,0 @@
-interface:
-  display_name: "UE5 Course Runner"
-  short_description: "UE5 course task execution loop"
-  default_prompt: "Use $ue5-course-runner to continue this UE5 course TODO with validation."

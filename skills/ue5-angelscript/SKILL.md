@@ -22,6 +22,10 @@ syntax.
 ## Rules
 
 - Keep one class per `.as` file unless the project convention says otherwise.
+- Use one superclass per script class. Do not model C++ multiple inheritance
+  directly in `.as`; replace Actor-plus-interface or mixin patterns with
+  composition, verified script-visible interfaces, or a narrow project C++
+  wrapper.
 - Use script annotations such as `UCLASS`, `UPROPERTY`, and `UFUNCTION`, not C++
   generated-body macros.
 - Do not assume C++ functions, macros, or override names are script-visible.
@@ -34,6 +38,8 @@ syntax.
 
 - Binding names can differ from C++; verify before copying course or sample
   code.
+- Unreal AngelScript inheritance is not C++ inheritance. Treat multiple base
+  classes as a design that needs translation, not syntax preservation.
 - A gameplay action helper should usually own shared assertions and spawn
   behavior rather than duplicating checks per input action.
 - Controller rotation is often the correct source for player aiming even when
