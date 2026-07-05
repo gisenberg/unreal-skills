@@ -4,7 +4,7 @@ Reusable Codex skills and context for UE5 work. These are intentionally
 project-agnostic: copy or install the relevant folders under `skills/` into a
 repo-local `.agents/skills` directory or a user Codex skills directory, then add
 project-specific paths and commands in that project's own guidance.
-Keep project-specific course runners, lecture TODOs, map names, depot paths, and
+Keep project-specific course runners, TODOs, map names, depot paths, and
 client details in the target project's local guidance instead of this repo.
 
 ## Skills
