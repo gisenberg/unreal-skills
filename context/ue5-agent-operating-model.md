@@ -11,6 +11,9 @@ patch workflow.
 - Prefer project-local gameplay code or wrapper code over engine edits.
 - Use editor automation to read and write editor state, not ad hoc binary file
   manipulation.
+- Prefer a thin project-local editor wrapper for start/restart/focus/smoke/log
+  chores. Keep project paths, target names, endpoints, and source-control
+  commands in project guidance rather than reusable skills.
 - Verify player-visible behavior in PIE or a packaged runtime. Commandlet
   compile success is not enough.
 - Record fresh log offsets before validation runs and scan only the new segment.
@@ -39,7 +42,7 @@ patch workflow.
   engine.
 - UE MCP/editor automation can be router based rather than a flat tool list.
   Discover concrete toolsets first, then call tools through the active router
-  envelope.
+  envelope; do not assume toolset umbrella names or generic save calls exist.
 - Shader worker output-version errors usually point at a stale
   `ShaderCompileWorker` binary/version file. Rebuild the worker before treating
   the problem as generic cache corruption.

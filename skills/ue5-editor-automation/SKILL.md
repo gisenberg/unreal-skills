@@ -8,6 +8,23 @@ description: Use for Unreal Editor automation setup and routing, including edito
 Use a project-local editor wrapper when one exists. The wrapper should make the
 editor state explicit before automation starts.
 
+## Wrapper Pattern
+
+A `ue-cli`-style wrapper is useful across UE projects when it stays thin,
+project-local, and config-driven. It should standardize lifecycle and evidence:
+
+- `doctor`: report project, editor PID, enabled automation plugins, ports, and
+  endpoint config;
+- `start` / `restart` / `stop`: launch the editor with logs and the intended
+  automation flags;
+- `focus`: foreground the editor before PIE or input-sensitive validation;
+- `mcp smoke` / `bridge smoke`: prove endpoint health before editor calls;
+- `logs`: return bounded recent log slices;
+- source-control sanity checks such as default-changelist inspection.
+
+Do not put project gameplay semantics or hard-coded sample paths in a reusable
+wrapper. Keep those in the target project's local guidance.
+
 ## Preflight
 
 1. Check whether the project provides a wrapper for start, restart, focus,
@@ -23,9 +40,40 @@ Prefer the native UE MCP/editor toolset route for generic editor operations
 once the endpoint is healthy. Use bridge-specific automation only for project
 contracts or when the native route is unavailable.
 
-Do not assume tool names. Discover concrete toolsets and invoke tools through
-the active router envelope. Avoid large schema dumps; inspect local plugin
-source or request one narrow schema at a time.
+Do not assume MCP exposes a flat tool list. UE 5.8-style MCP may expose only
+router tools first:
+
+- `list_toolsets`
+- `describe_toolset`
+- `call_tool`
+
+Discover concrete toolset names before calling tools. Names can be specific
+module paths, for example `EditorToolset.EditorAppToolset`,
+`editor_toolset.toolsets.asset.AssetTools`, or
+`editor_toolset.toolsets.blueprint.BlueprintTools`; do not guess umbrella names
+such as `EditorToolset`.
+
+Invoke tools through the router envelope used by the active server:
+
+```json
+{
+  "toolset_name": "editor_toolset.toolsets.asset.AssetTools",
+  "tool_name": "exists",
+  "arguments": { "path": "/Game/Example" }
+}
+```
+
+Avoid large schema dumps; inspect local plugin source first or request one
+specific toolset/tool schema at a time. If an agent runtime does not initially
+show native MCP tools, verify endpoint config and port health, then use the
+runtime's tool-discovery mechanism before falling back to raw JSON-RPC. Treat
+raw JSON-RPC as transport only; editor operations should still go through UE
+toolsets.
+
+For asset work, discover the actual save tool. In EditorToolset-style servers,
+asset saves may be `AssetTools.save_assets`, not a generic save call or a scene
+actor save call. After MCP or bridge asset moves/renames, inspect source
+control for default-changelist fallout before submitting.
 
 ## Recovery
 
